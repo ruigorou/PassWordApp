@@ -17,7 +17,7 @@ def edit_screen(app: "PasswordApp", credential: Credential | None) -> "Screen":
     is_new = credential is None
     title = ft.TextField(label="タイトル *", key="edit_title")
     login_id = ft.TextField(label="ID", key="edit_login_id")
-    password = ft.TextField(label="パスワード *", password=True, can_reveal_password=True, expand=True, key="edit_password")
+    password = ft.TextField(label="パスワード *", password=True, can_reveal_password=True, key="edit_password")
     url = ft.TextField(label="URL", hint_text="https://", keyboard_type=ft.KeyboardType.URL, key="edit_url")
     memo = ft.TextField(label="メモ", multiline=True, min_lines=3, max_lines=8, key="edit_memo")
     fields = {"title": title, "login_id": login_id, "password": password, "url": url, "memo": memo}
@@ -62,10 +62,11 @@ def edit_screen(app: "PasswordApp", credential: Credential | None) -> "Screen":
         title=ft.Text("新規登録" if is_new else "編集"),
         actions=actions,
     )
-    generate = ft.IconButton(
+    generate = ft.TextButton(
+        content="パスワードを生成",
         icon=ft.Icons.AUTO_AWESOME,
-        tooltip="パスワードを生成",
         on_click=app.action(lambda e: open_generator_dialog(app, use_generated)),
+        key="edit_generate",
     )
     content = ft.Container(
         padding=16,
@@ -75,7 +76,8 @@ def edit_screen(app: "PasswordApp", credential: Credential | None) -> "Screen":
             controls=[
                 title,
                 login_id,
-                ft.Row([password, generate]),
+                # 他の入力欄と幅をそろえるため、生成ボタンは欄の下に置く
+                ft.Column([password, generate], spacing=0),
                 url,
                 memo,
                 ft.FilledButton(content="保存", icon=ft.Icons.SAVE, on_click=app.action(save), key="edit_save"),
