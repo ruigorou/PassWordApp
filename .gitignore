@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environments / secrets
+.env
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Flet
+.flet/
+build/
+
+# IDE
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+# venv created in the project root (python -m venv .)
+Lib/
+Include/
+Scripts/
+share/
+pyvenv.cfg
+
+# Vault data (encrypted, but never commit it)
+*.db
