@@ -37,12 +37,16 @@ def _tile(app: "PasswordApp", credential: Credential) -> ft.ListTile:
 def list_screen(app: "PasswordApp") -> "Screen":
     from presentation.app import Screen
 
-    search = ft.TextField(hint_text="検索（タイトル・ID・URL・メモ）", prefix_icon=ft.Icons.SEARCH, key="search")
+    search = ft.TextField(
+        hint_text="検索（タイトル・ID・URL・メモ）", prefix_icon=ft.Icons.SEARCH, key="search", expand=True
+    )
+    count = ft.Text(key="count")
     notice = ft.Text(color=ft.Colors.ERROR, visible=False)
     items = ft.ListView(expand=True)
 
     def refresh():
         result = app.credentials.search(search.value)
+        count.value = f"{result.total}件"
         notice.value = f"読めないデータが {result.unreadable} 件あります"
         notice.visible = result.unreadable > 0
         if result.items:
@@ -65,6 +69,13 @@ def list_screen(app: "PasswordApp") -> "Screen":
     fab = ft.FloatingActionButton(icon=ft.Icons.ADD, tooltip="追加", key="add", on_click=app.action(lambda e: app.show_edit()))
     content = ft.Column(
         expand=True,
-        controls=[ft.Container(search, padding=ft.Padding.symmetric(horizontal=16, vertical=8)), notice, items],
+        controls=[
+            ft.Container(
+                ft.Row([search, count], vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                padding=ft.Padding.symmetric(horizontal=16, vertical=8),
+            ),
+            notice,
+            items,
+        ],
     )
     return Screen(content, appbar, fab)

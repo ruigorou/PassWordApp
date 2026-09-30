@@ -18,3 +18,4 @@ async def test_setup_add_and_list(flet_app: ftt.FletTestApp):
     await t.pump_and_settle()
 
     assert (await t.find_by_text("GitHub")).count == 1
+    assert (await t.find_by_text("1件")).count == 1

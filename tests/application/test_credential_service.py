@@ -30,6 +30,13 @@ def titles(result):
     return [c.title.value for c in result.items]
 
 
+def test_search_reports_total_regardless_of_query(service):
+    for t in ("GitHub", "Google", "銀行"):
+        service.add(inp(t))
+    assert service.search().total == 3
+    assert service.search("git").total == 3
+
+
 def test_search_is_sorted_case_insensitively(service):
     for t in ("banana", "Apple", "cherry"):
         service.add(inp(t))
