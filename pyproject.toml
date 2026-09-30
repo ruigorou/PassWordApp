@@ -40,7 +40,7 @@ copyright = "Copyright (C) 2023-2026 by Flet"
 # shrinks it to the margin iOS, macOS and Android each mask away. This colour
 # is what sits behind it where transparency cannot survive - the iOS icon, the
 # macOS tile and the Android background layer. Defaults to white.
-# icon_background = "#ffffff"
+icon_background = "#2A8CF3"
 
 [tool.flet.app]
 path = "src"
